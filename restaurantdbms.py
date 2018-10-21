@@ -3,8 +3,8 @@ from tkinter import *
 
 root = Tk()
 
-#conn = pymysql.connect(host='localhost', port=3306, user='sidd', passwd='123', db='reservations')
-#cur = conn.cursor()
+conn = pymysql.connect(host='localhost', port=3306, user='sidd', passwd='123', db='reservations')
+cur = conn.cursor()
 #cur.execute("SELECT * FROM restaurant_details")
 
 #print(cur.description)
@@ -30,12 +30,13 @@ def insertlogin():
    name=Username.get()
    email=Email.get()
    password=Password.get()
-   conn = pymysql.connect(host='localhost', port=3306, user='sidd', passwd='123', db='reservations')
-   cur = conn.cursor()
+   #conn = pymysql.connect(host='localhost', port=3306, user='sidd', passwd='123', db='reservations')
+   #cur = conn.cursor()
    #cur.execute('CREATE TABLE IF NOT EXISTS Student (Fullname TEXT,Email TEXT,Gender TEXT,country TEXT,Programming TEXT)')
    sql1 = "INSERT INTO `users` (`username`,`password`,`email`) VALUES (%s, %s, %s)"
    cur.execute(sql1, (name, password, email))
    conn.commit()
+   cur.close()
 
 
 label_0 = Label(root, text="Login",width=20,font=("bold", 20))
@@ -61,10 +62,5 @@ entry_3.place(x=240,y=230)
 
 Button(root, text='Submit',width=20,bg='dark blue',fg='white', command=insertlogin).place(x=180,y=300)
 
-
-root.mainloop()
-
-cur.close()
-conn.close()
 
 root.mainloop()
