@@ -3,10 +3,11 @@ from tkinter import *
 conn = pymysql.connect(host='localhost', port=3306, user='sidd', passwd='123', db='reservations')
 #cur = conn.cursor()
 
+
 class Login:
     def __init__(self, f1):
         self.f1=f1;
-        self.Username=StringVar()
+        self.Uname=StringVar()
         self.Password=StringVar()
         self.Email = StringVar()
 
@@ -16,25 +17,26 @@ class Login:
         self.label_1 = Label(f1, text="Username",width=20,font=("bold", 10))
         self.label_1.place(x=80,y=130)
 
-        self.entry_1 = Entry(f1, textvar=self.Username)
+        self.entry_1 = Entry(f1, textvar=self.Uname)
         self.entry_1.place(x=240,y=130)
 
         self.label_2 = Label(f1, text="Password",width=20,font=("bold", 10))
-        self.label_2.place(x=68,y=180)
+        self.label_2.place(x=79,y=180)
 
         self.entry_2 = Entry(f1, textvar=self.Password)
         self.entry_2.place(x=240,y=180)
 
         self.label_3 = Label(f1, text="Email",width=20,font=("bold", 10))
-        self.label_3.place(x=70,y=230)
+        self.label_3.place(x=90,y=230)
 
         self.entry_3 = Entry(f1, textvar=self.Email)
         self.entry_3.place(x=240,y=230)
 
-        self.btn = Button(f1, text='Submit',width=20,bg='dark blue',fg='white', command=self.insertlogin).place(x=180,y=300)
+        self.btn = Button(f1, text='Submit',width=20,bg='dark blue',fg='white', command=self.insertlogin)
+        self.btn.place(x=180,y=300)
 
     def insertlogin(self):
-        name=self.Username.get()
+        name=self.Uname.get()
         email=self.Email.get()
         password=self.Password.get()
            #conn = pymysql.connect(host='localhost', port=3306, user='sidd', passwd='123', db='reservations')
@@ -48,7 +50,9 @@ class Login:
         #global root
         f2 = Frame(root,width=500,height=500)
         f2.pack()
-        Lab = Label(f2, text= "Test")
+        global Username
+        Username = self.Uname
+        Lab = Label(f2, text=Username.get())
         Lab.pack()
 
 
