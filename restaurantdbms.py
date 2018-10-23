@@ -87,11 +87,17 @@ class Page1:
         #self.label2.place(x=70, y=50, anchor="w")
         self.label2.pack(side=TOP)
 
-        #self.label3 = Label(self.f1, text="Menu")
-        #self.label3.place(x=350, y=50, anchor="w")
         for row in result:
-            self.label4 = Label(self.f1, text=row)
+            rid = row[0]
+            rid = (str)(rid)
+            name = row[1]
+            locality = row[2]
+            valet = row[3]
+            toprint = (rid + " - " + name + " - " + "Location : " + locality + " - " + "Valet : "+ valet)
+            self.label4 = Label(self.f1, text=toprint)
             self.label4.pack(side = TOP)
+
+
             #self.label5 = Label(self.f1, text="LOST")
             #self.label5.place(x=20, y=100)
             #ogy = ogy * 2

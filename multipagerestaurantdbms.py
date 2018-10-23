@@ -38,9 +38,36 @@ class Page1(Page):
 
 class Page2(Page):
    def __init__(self, *args, **kwargs):
+       self.f1=self
        Page.__init__(self, *args, **kwargs)
-       label = Label(self, text="This is page 2")
-       label.pack(side="top", fill="both", expand=True)
+       #label = Label(self, text="This is page 2")
+       #label.pack(side="top", fill="both", expand=True)
+       self.label1 = Label(self.f1, text=" Cuisine ", font = ("bold",15))
+       self.label1.pack(side=TOP)
+
+       cur = conn.cursor()
+       sql = "SELECT * from cuisine"
+       cur.execute(sql)
+       result = cur.fetchall()
+
+       self.label2 = Label(self.f1, text="RID - Itemname - Calorie Count - Type of food - Price - Serves")
+       #self.label2.place(x=70, y=50, anchor="w")
+       self.label2.pack(side=TOP)
+
+       #self.label3 = Label(self.f1, text="Menu")
+       #self.label3.place(x=350, y=50, anchor="w")
+       for row in result:
+           rid = row[0]
+           itemname = row[1]
+           calories = row[2]
+           food = row[3]
+           price = row[4]
+           serves = row[5]
+           toprint = ( + " - " + itemname + " - ")
+           self.label4 = Label(self.f1, text=row)
+           self.label4.pack(side = TOP)
+       cur.close()
+
 
 class Page3(Page):
    def __init__(self, *args, **kwargs):
@@ -48,9 +75,10 @@ class Page3(Page):
        label = Label(self, text="This is page 3")
        label.pack(side="top", fill="both", expand=True)
 
-class MainView(Frame):
-    def __init__(self, *args, **kwargs):
-        Frame.__init__(self, *args, **kwargs)
+class MainView():
+    def __init__(self, f):
+        #Frame.__init__(self, *args, **kwargs)
+        self.f = f;
         p1 = Page1(self)
         p2 = Page2(self)
         p3 = Page3(self)
@@ -74,9 +102,11 @@ class MainView(Frame):
 
         p1.show()
 
-if __name__ == "__main__":
-    root = Tk()
-    main = MainView(root)
-    main.pack(side="top", fill="both", expand=True)
-    root.wm_geometry("500x500")
-    root.mainloop()
+
+root = Tk()
+root.geometry("500x500")
+
+mainframe = Frame(root, width=500, height=500)
+page2 = MainView(mainframe)
+#main.pack(side="top", fill="both", expand=True)
+root.mainloop()
