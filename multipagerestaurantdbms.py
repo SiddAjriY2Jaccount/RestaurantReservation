@@ -1,4 +1,8 @@
+import pymysql
 from tkinter import *
+import tkinter.messagebox
+conn = pymysql.connect(host='localhost', port=3306, user='sidd', passwd='123', db='reservations')
+
 
 class Page(Frame):
     def __init__(self, *args, **kwargs):
@@ -8,9 +12,29 @@ class Page(Frame):
 
 class Page1(Page):
    def __init__(self, *args, **kwargs):
+       self.f1 = self
        Page.__init__(self, *args, **kwargs)
-       label = Label(self, text="This is page 1")
-       label.pack(side="top", fill="both", expand=True)
+       #label = Label(self, text="This is page 1")
+       #label.pack(side="top", fill="both", expand=True)
+       self.label1 = Label(self.f1, text=" All you need to know - Affiliated Restaurants ", font = ("bold",15))
+       self.label1.pack(side=TOP)
+
+       cur = conn.cursor()
+       sql = "SELECT * from restaurant_details"
+       cur.execute(sql)
+       result = cur.fetchall()
+
+       self.label2 = Label(self.f1, text="Restaurant Details")
+       #self.label2.place(x=70, y=50, anchor="w")
+       self.label2.pack(side=TOP)
+
+       #self.label3 = Label(self.f1, text="Menu")
+       #self.label3.place(x=350, y=50, anchor="w")
+       for row in result:
+           self.label4 = Label(self.f1, text=row)
+           self.label4.pack(side = TOP)
+       cur.close()
+
 
 class Page2(Page):
    def __init__(self, *args, **kwargs):

@@ -62,7 +62,7 @@ class Login:
 
         self.f.destroy()
         #global root#self.f1.title("RESTAURANT DETAILS AND CUISINE")
-        f1 = Frame(root,width=500,height=500)
+        f1 = Frame(root,width=1000,height=1000)
         f1.pack()
         #Lab = Label(f2, text=Username.get())
         #Lab.pack()
@@ -74,8 +74,28 @@ class Page1:
     def __init__(self, f1):
         self.f1 = f1
         self.f1.pack()
-        self.label1 = Label(self.f1, text="All you need to know - Affiliated Restaurants :", font = ("bold",15))
-        self.label1.place(x=0,y=20, anchor="w")
+
+        self.label1 = Label(self.f1, text=" All you need to know - Affiliated Restaurants ", font = ("bold",15))
+        self.label1.pack(side=TOP)
+
+        cur = conn.cursor()
+        sql = "SELECT * from restaurant_details"
+        cur.execute(sql)
+        result = cur.fetchall()
+
+        self.label2 = Label(self.f1, text="Restaurant Details")
+        #self.label2.place(x=70, y=50, anchor="w")
+        self.label2.pack(side=TOP)
+
+        #self.label3 = Label(self.f1, text="Menu")
+        #self.label3.place(x=350, y=50, anchor="w")
+        for row in result:
+            self.label4 = Label(self.f1, text=row)
+            self.label4.pack(side = TOP)
+            #self.label5 = Label(self.f1, text="LOST")
+            #self.label5.place(x=20, y=100)
+            #ogy = ogy * 2
+            #ogx = ogx + 20
 
 
 
