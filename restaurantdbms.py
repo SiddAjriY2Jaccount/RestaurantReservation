@@ -93,7 +93,7 @@ class Page1:
             name = row[1]
             locality = row[2]
             valet = row[3]
-            toprint = (rid + " - " + name + " - " + "Location : " + locality + " - " + "Valet : "+ valet)
+            toprint = ("RID " + rid + " - " + name + " - " + "Location : " + locality + " - " + "Valet : "+ valet)
             self.label4 = Label(self.f1, text=toprint)
             self.label4.pack(side = TOP)
 
@@ -102,11 +102,107 @@ class Page1:
             #self.label5.place(x=20, y=100)
             #ogy = ogy * 2
             #ogx = ogx + 20
+        self.btn1 = Button(self.f1, text='Next',width=20,bg='red',fg='white', anchor="center", command=self.nextpage)
+        self.btn1.pack(side=BOTTOM)
+
+        #self.btn2 = Button(self.f1, text='Previous',width=20,bg='red',fg='white', anchor="center", command=self.prevpage)
+        #self.btn2.pack(side=BOTTOM)
+
+        cur.close()
+
+    def nextpage(self):
+        self.f1.destroy()
+        f2 = Frame(root,width=1000,height=1000)
+        f2.pack()
+        page2 = Page2(f2)
+
+class Page2:
+    def __init__(self, f2):
+        self.f2 = f2
+        self.f2.pack()
+
+        self.label1 = Label(self.f2, text=" Menu ", font = ("bold",15))
+        self.label1.pack(side=TOP)
+
+        cur = conn.cursor()
+        sql = "SELECT * from cuisine"
+        cur.execute(sql)
+        result = cur.fetchall()
+
+        self.label2 = Label(self.f2, text="Cuisine On Offer")
+        #self.label2.place(x=70, y=50, anchor="w")
+        self.label2.pack(side=TOP)
+
+        for row in result:
+            rid = row[0]
+            rid = (str)(rid)
+            itemname = row[1]
+            calories = (str)(row[2])
+            type =row[3]
+            price = (str)(row[4])
+            serves = row[5]
+            toprint = ("RID " + rid + " - " + itemname + " - " + "Calories : " + calories + " - " + type + " - " + price +"$ - " + serves)
+            self.label4 = Label(self.f2, text=toprint)
+            self.label4.pack(side = TOP)
 
 
+            #self.label5 = Label(self.f1, text="LOST")
+            #self.label5.place(x=20, y=100)
+            #ogy = ogy * 2
+            #ogx = ogx + 20
+        self.btn1 = Button(self.f2, text='Next',width=20,bg='red',fg='white', anchor="center", command=self.nextpage)
+        self.btn1.pack(side=BOTTOM)
+
+        self.btn2 = Button(self.f2, text='Previous',width=20,bg='red',fg='white', anchor="center", command=self.prevpage)
+        self.btn2.pack(side=BOTTOM)
+
+        cur.close()
+
+    def nextpage(self):
+        self.f2.destroy()
+        f3 = Frame(root,width=1000,height=1000)
+        f3.pack()
+        page3 = Page3(f3)
+
+    def prevpage(self):
+        self.f2.destroy()
+        f1 = Frame(root,width=1000,height=1000)
+        f1.pack()
+        page11 = Page1(f1)
+
+class Page3:
+    def __init__(self, f3):
+        self.f3 = f3
+        self.f3.pack()
+        self.Uname=StringVar()
+        self.Seats=IntVar()
+        self.Email = StringVar()
+
+        self.labela = Label(self.f3, text=" BOOKING OF TABLES ", font = ("bold",15))
+        self.labela.pack(side=TOP)
+        self.label_0 = Label(self.f3, text="Reserve your seats here, " + Username,width=20,font=("bold", 20))
+        self.label_0.place(x=90,y=53)
+
+        self.label_1 = Label(self.f3, text="RID",width=20,font=("bold", 10))
+        self.label_1.place(x=80,y=130)
+
+        self.entry_1 = Entry(self.f3, textvar=self.Uname)
+        self.entry_1.place(x=240,y=130)
+
+        self.label_2 = Label(self.f3, text="Password",width=20,font=("bold", 10))
+        self.label_2.place(x=79,y=180)
+
+        self.entry_2 = Entry(self.f3, textvar=self.Password)
+        self.entry_2.place(x=240,y=180)
+
+        self.label_3 = Label(self.f3, text="Email",width=20,font=("bold", 10))
+        self.label_3.place(x=90,y=230)
+
+        self.entry_3 = Entry(f, textvar=self.Email)
+        self.entry_3.place(x=240,y=230)
 
 root = Tk()
-root.geometry('500x500')
+root.geometry('700x500')
 root.title("RESTAURANT RESERVATIONS DESKTOP APPLICATION")
 f = Frame(root,width=500,height=500)
 f.pack()

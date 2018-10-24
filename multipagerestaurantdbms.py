@@ -75,7 +75,7 @@ class Page3(Page):
        label = Label(self, text="This is page 3")
        label.pack(side="top", fill="both", expand=True)
 
-class MainView():
+class MainView:
     def __init__(self, f):
         #Frame.__init__(self, *args, **kwargs)
         self.f = f;
