@@ -1,5 +1,7 @@
 import pymysql
 from tkinter import *
+from PIL import ImageTk, Image
+import os
 import tkinter.messagebox
 conn = pymysql.connect(host='localhost', port=3306, user='sidd', passwd='123', db='reservations')
 #cur = conn.cursor()
@@ -286,7 +288,12 @@ class Thankspage:
         self.f5=f5
         self.label_0 = Label(self.f5, text="THANK YOU",width=20,font=("bold", 30))
         self.label_0.pack(side="top", fill="both", expand=True)
-
+        self.iconPath = '/home/sidd/reservations/Thanks.jpg'
+        self.icon = ImageTk.PhotoImage(Image.open(self.iconPath))
+        self.icon_size = Label(self.f5)
+        self.icon_size.image = self.icon  # <== this is were we anchor the img object
+        self.icon_size.configure(image=self.icon)
+        self.icon_size.pack(side="top", fill="both", expand=True)
 
 root = Tk()
 root.geometry('700x500')
