@@ -38,6 +38,19 @@ class Login:
 
         self.btn = Button(f, text='Submit',width=20,bg='dark blue',fg='white', anchor="center", command=self.insertlogin)
         self.btn.place(x=180,y=300)
+        self.btn1 = Button(f, text='Admin?',width=20,bg='green',fg='white', anchor="center", command=self.admin)
+        self.btn1.place(x=180,y=350)
+
+    def admin(self):
+        self.f.destroy()
+        #global root#self.f1.title("RESTAURANT DETAILS AND CUISINE")
+        f10 = Frame(root,width=1000,height=1000)
+        f10.pack()
+        #Lab = Label(f2, text=Username.get())
+        #Lab.pack()
+        admin = Admin(f10)
+
+
 
     def insertlogin(self):
         name=self.Uname.get()
@@ -71,6 +84,244 @@ class Login:
         #Lab = Label(f2, text=Username.get())
         #Lab.pack()
         page1 = Page1(f1)
+
+
+class Admin:
+    def __init__(self, f10):
+        self.f10 = f10
+        self.f10.pack()
+
+        self.Uname=StringVar()
+        self.Password=StringVar()
+        self.Email = StringVar()
+
+        self.label_0 = Label(self.f10, text="ADMIN LOGIN",width=20,font=("bold", 20))
+        self.label_0.place(x=90,y=53)
+
+        self.label_1 = Label(self.f10, text="Username",width=20,font=("bold", 10))
+        self.label_1.place(x=80,y=130)
+
+        self.entry_1 = Entry(self.f10, textvar=self.Uname)
+        self.entry_1.place(x=240,y=130)
+
+        self.label_2 = Label(self.f10, text="Password",width=20,font=("bold", 10))
+        self.label_2.place(x=79,y=180)
+
+        self.entry_2 = Entry(self.f10, textvar=self.Password)
+        self.entry_2.place(x=240,y=180)
+
+        self.label_3 = Label(self.f10, text="Email",width=20,font=("bold", 10))
+        self.label_3.place(x=90,y=230)
+
+        self.entry_3 = Entry(self.f10, textvar=self.Email)
+        self.entry_3.place(x=240,y=230)
+
+        self.btn = Button(self.f10, text='Submit',width=20,bg='dark blue',fg='white', anchor="center", command=self.adminlogin)
+        self.btn.place(x=180,y=300)
+
+        self.btn = Button(self.f10, text='Logout',width=20,bg='dark blue',fg='white', anchor="center", command=self.adminlogout)
+        self.btn.place(x=180,y=350)
+
+
+    def adminlogout(self):
+        self.f10.destroy()
+        f200 = Frame(root,width=500,height=500)
+        f200.pack()
+        login1 = Login(f200)
+
+
+
+
+    def adminlogin(self):
+        admincounter = 0
+        #to check if admin aready EXISTS
+        cur1 = conn.cursor()
+        sql1 ="SELECT * FROM admins"
+        cur1.execute(sql1)
+        result1 = cur1.fetchall()
+        for row in result1:
+            un = row[0]
+            pw = row[1]
+            email = row[2]
+            if(un == self.Uname.get() and pw == self.Password.get() and email == self.Email.get()):
+                admincounter = 1
+
+        if(admincounter==0):
+            tkinter.messagebox.showinfo("ERROR", "Enter valid admin details")
+        if(admincounter==1):
+            self.f10.destroy()
+            #global root#self.f1.title("RESTAURANT DETAILS AND CUISINE")
+            f11 = Frame(root,width=1000,height=1000)
+            f11.pack()
+            #Lab = Label(f2, text=Username.get())
+            #Lab.pack()
+            admininsert = AdminInsertRD(f11)
+
+
+class AdminInsertRD:
+    def __init__(self, f11):
+        self.f11 = f11
+
+
+        self.rid = IntVar()
+        self.name = StringVar()
+        self.locality = StringVar()
+        self.valet = StringVar()
+
+        self.label_0 = Label(self.f11, text="Insert restaurant details",width=20,font=("bold", 15))
+        self.label_0.place(x=90,y=53)
+
+        self.label_1 = Label(self.f11, text="RID",width=20,font=("bold", 10))
+        self.label_1.place(x=80,y=130)
+
+        self.entry_1 = Entry(self.f11, textvar=self.rid)
+        self.entry_1.place(x=240,y=130)
+
+        self.label_2 = Label(self.f11, text="Restaurant Name",width=20,font=("bold", 10))
+        self.label_2.place(x=79,y=180)
+
+        self.entry_2 = Entry(self.f11, textvar=self.name)
+        self.entry_2.place(x=240,y=180)
+
+        self.label_3 = Label(self.f11, text="Locality",width=20,font=("bold", 10))
+        self.label_3.place(x=90,y=230)
+
+        self.entry_3 = Entry(self.f11, textvar=self.locality)
+        self.entry_3.place(x=240,y=230)
+
+        self.label_4 = Label(self.f11, text="Valet",width=20,font=("bold", 10))
+        self.label_4.place(x=90,y=280)
+
+        self.entry_4 = Entry(self.f11, textvar=self.valet)
+        self.entry_4.place(x=240,y=280)
+
+        self.btn = Button(self.f11, text='Submit',width=20,bg='dark blue',fg='white', anchor="center", command=self.admininsertRDet)
+        self.btn.place(x=180,y=320)
+
+        self.btn1 = Button(self.f11, text='Back',width=20,bg='dark blue',fg='white', anchor="center", command=self.adminback)
+        self.btn1.place(x=180,y=350)
+
+
+    def adminback(self):
+        self.f11.destroy()
+        #global root#self.f1.title("RESTAURANT DETAILS AND CUISINE")
+        f201 = Frame(root,width=1000,height=1000)
+        f201.pack()
+        #Lab = Label(f2, text=Username.get())
+        #Lab.pack()
+        adminbackhome = Admin(f201)
+
+    def admininsertRDet(self):
+        #global Username
+        #print(Username.get())
+        valet=self.valet.get()
+        rid=self.rid.get()
+        locality=self.locality.get()
+        name=self.name.get()
+        #global RID
+        #RID = self.Rid
+        #if not, then enter details into Bookings table
+        cur = conn.cursor()
+        #cur.execute('CREATE TABLE IF NOT EXISTS Student (Fullname TEXT,Email TEXT,Gender TEXT,country TEXT,Programming TEXT)')
+        sql = "INSERT INTO restaurant_details (rid, name, locality, valet) VALUES (%s, %s, %s, %s)"
+        cur.execute(sql, ((int)(rid), name, locality, valet))
+        conn.commit()
+        tkinter.messagebox.showinfo("Updated", "Successful updation")
+        cur.close()
+
+        print(self.rid.get())
+
+        self.f11.destroy()
+        #global root#self.f1.title("RESTAURANT DETAILS AND CUISINE")
+        f12 = Frame(root,width=1000,height=1000)
+        f12.pack()
+        #Lab = Label(f2, text=Username.get())
+        #Lab.pack()
+        admincuisine = AdminCuisine(f12)
+
+class AdminCuisine:
+    def __init__(self, f12):
+        self.f11 = f12
+        self.f11.pack()
+
+        self.rid = IntVar()
+        self.name = StringVar()
+        self.calories = IntVar()
+        self.price = IntVar()
+        self.serves = StringVar()
+        self.type = StringVar()
+
+        self.label_0 = Label(self.f11, text="Cuisine details",width=20,font=("bold", 15))
+        self.label_0.place(x=90,y=53)
+
+        self.label_1 = Label(self.f11, text="RID",width=20,font=("bold", 10))
+        self.label_1.place(x=80,y=130)
+
+        self.entry_1 = Entry(self.f11, textvar=self.rid)
+        self.entry_1.place(x=240,y=130)
+
+        self.label_2 = Label(self.f11, text="Item Name",width=20,font=("bold", 10))
+        self.label_2.place(x=79,y=180)
+
+        self.entry_2 = Entry(self.f11, textvar=self.name)
+        self.entry_2.place(x=240,y=180)
+
+        self.label_3 = Label(self.f11, text="Calories",width=20,font=("bold", 10))
+        self.label_3.place(x=90,y=230)
+
+        self.entry_3 = Entry(self.f11, textvar=self.calories)
+        self.entry_3.place(x=240,y=230)
+
+        self.label_4 = Label(self.f11, text="Type of food",width=20,font=("bold", 10))
+        self.label_4.place(x=90,y=280)
+
+        self.entry_4 = Entry(self.f11, textvar=self.type)
+        self.entry_4.place(x=240,y=280)
+
+        self.label_5 = Label(self.f11, text="Price",width=20,font=("bold", 10))
+        self.label_5.place(x=90,y=330)
+
+        self.entry_4 = Entry(self.f11, textvar=self.price)
+        self.entry_4.place(x=240,y=330)
+
+        self.label_5 = Label(self.f11, text="Serves",width=20,font=("bold", 10))
+        self.label_5.place(x=90,y=380)
+
+        self.entry_5 = Entry(self.f11, textvar=self.serves)
+        self.entry_5.place(x=240,y=380)
+
+        self.btn = Button(self.f11, text='Submit',width=20,bg='dark blue',fg='white', anchor="center", command=self.admincuisineDet)
+        self.btn.place(x=180,y=410)
+
+
+    def admincuisineDet(self):
+        serves=self.serves.get()
+        rid=self.rid.get()
+        price=self.price.get()
+        name=self.name.get()
+        type=self.type.get()
+        calories=self.calories.get()
+        #global RID
+        #RID = self.Rid
+        #if not, then enter details into Bookings table
+        #conn = pymysql.connect(host='localhost', port=3306, user='sidd', passwd='123', db='reservations')
+        cur = conn.cursor()
+        #cur.execute('CREATE TABLE IF NOT EXISTS Student (Fullname TEXT,Email TEXT,Gender TEXT,country TEXT,Programming TEXT)')
+        sql = "INSERT INTO cuisine (rid, itemname, calories, type, price, serves) VALUES (%s, %s, %s, %s, %s, %s)"
+        cur.execute(sql, ((int)(rid), name, (int)(calories), type, (int)(price), serves))
+        conn.commit()
+        tkinter.messagebox.showinfo("Updated", "Successful updation")
+        cur.close()
+
+        print(self.rid.get())
+
+        self.f11.destroy()
+        #global root#self.f1.title("RESTAURANT DETAILS AND CUISINE")
+        f12 = Frame(root,width=1000,height=1000)
+        f12.pack()
+        #Lab = Label(f2, text=Username.get())
+        #Lab.pack()
+        adminmain = AdminInsertRD(f12)
 
 
 class Page1:
